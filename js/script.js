@@ -31,9 +31,31 @@ function addTransactionDOM(transaction){
     list.appendChild(item);
 }
 
+function updateVlaues() {
+   const amounts = transactions.map(transaction => transaction.amount);
+   const total = amounts
+    .reduce((acc, item) => (acc += item), 0)
+    .toFixed(2);
+    
+    const income = amounts
+    .filter(item => item > 0 )
+    .reduce((acc, item) => (acc += item), 0)
+    .toFixed(2);
+
+    const expense = (amounts
+    .filter(item => item < 0 )
+    .reduce((acc, item) => (acc += item), 0)* -1)
+    .toFixed(2);
+
+    blance.textContent = `$${total}`;
+    money_plus.textContent = `$${income}`;
+    money_minus.textContent = `$${expense}`;
+}
+
 function init() {
     list.innerHTML = '';
     transactions.forEach(addTransactionDOM)
+    updateVlaues();
 }
 
 init();
